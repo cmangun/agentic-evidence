@@ -21,7 +21,7 @@ Implementation lives in the six component repos linked below. This repo (`agenti
 
 ## Reference architecture
 
-The full reference architecture — system diagram, component responsibility map, data flow across trust boundaries, and explicit non-goals — publishes in this repo as `REFERENCE-ARCHITECTURE.md`. Document in active draft.
+The full reference architecture is at [REFERENCE-ARCHITECTURE.md](REFERENCE-ARCHITECTURE.md). It defines the three trust boundaries, the six components, the data flow through a single agent run, and the architectural positions taken for the v0.1 release line.
 
 ## Specifications
 
