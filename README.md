@@ -37,7 +37,7 @@ A long-form treatment of the design rationale — why receipts, why deny-by-defa
 
 ## Glossary
 
-Precise definitions for the core suite vocabulary — receipt, trace, artifact, bundle, decision-receipt, provenance — publish as `GLOSSARY.md`. The term boundaries matter: conflating receipts with traces, or artifacts with bundles, is a common source of design confusion in this problem space.
+Cross-suite vocabulary is defined in [GLOSSARY.md](GLOSSARY.md). It distinguishes the terms most commonly conflated (receipt vs. log, trace vs. OTel trace, provenance vs. data lineage).
 
 ## Roadmap and versioning
 
