@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Agentic Evidence Suite — A Reference Architecture for Verifiable Agent Execution</title>
+<style>
+@page {
+  size: Letter;
+  margin: 0.9in 0.9in 1.1in 0.9in;
+  @bottom-left {
+    content: "Christopher Mangun · Agentic Systems Architect";
+    font-family: "Helvetica", "Arial", sans-serif;
+    font-size: 8pt;
+    color: #555;
+  }
+  @bottom-right {
+    content: "Page " counter(page) " / " counter(pages);
+    font-family: "Helvetica", "Arial", sans-serif;
+    font-size: 8pt;
+    color: #555;
+  }
+}
+@page:first {
+  margin: 0;
+  @bottom-left { content: ""; }
+  @bottom-right { content: ""; }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 10.5pt;
+  line-height: 1.55;
+  color: #111;
+  background: #fff;
+}
+
+h1, h2, h3, h4, .sans {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-weight: 600;
+  color: #000;
+}
+
+h1 { font-size: 22pt; line-height: 1.15; margin: 0 0 0.2em 0; letter-spacing: -0.01em; }
+h2 {
+  font-size: 14pt;
+  margin: 2.2em 0 0.6em 0;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #000;
+  letter-spacing: 0.01em;
+}
+h3 {
+  font-size: 11pt;
+  margin: 1.4em 0 0.4em 0;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+h4 {
+  font-size: 10.5pt;
+  margin: 1em 0 0.3em 0;
+  font-style: italic;
+  font-weight: 500;
+}
+
+p { margin: 0 0 0.8em 0; }
+
+.lede {
+  font-size: 11.5pt;
+  line-height: 1.5;
+}
+
+em { font-style: italic; }
+strong { font-weight: 700; }
+
+code, .mono {
+  font-family: "Menlo", "Courier New", monospace;
+  font-size: 9.5pt;
+  background: #f3f3f3;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+a { color: #000; text-decoration: underline; text-decoration-thickness: 0.5px; text-underline-offset: 2px; }
+
+hr {
+  border: 0;
+  border-top: 1px solid #000;
+  margin: 1.5em 0;
+}
+
+ul, ol { margin: 0.5em 0 0.9em 1.4em; padding: 0; }
+li { margin: 0.25em 0; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.8em 0 1.2em 0;
+  font-size: 9.5pt;
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 8px 10px;
+  border-bottom: 1px solid #ccc;
+}
+th {
+  border-bottom: 1px solid #000;
+  font-weight: 700;
+  font-size: 9pt;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+tr:last-child td { border-bottom: 1px solid #000; }
+
+blockquote {
+  margin: 1em 0;
+  padding: 0.2em 0 0.2em 1em;
+  border-left: 2px solid #000;
+  font-style: italic;
+  color: #222;
+}
+
+.page-break { page-break-after: always; }
+.no-break { page-break-inside: avoid; }
+
+/* COVER */
+.cover {
+  width: 100%;
+  height: 100vh;
+  min-height: 10.5in;
+  padding: 1.1in 0.9in;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  page-break-after: always;
+  border-left: 4px solid #000;
+}
+.cover-top { }
+.cover-mark {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 9pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #000;
+  margin-bottom: 2em;
+}
+.cover-mark span { color: #888; padding-right: 0.5em; }
+
+.cover-title {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 40pt;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.4em 0;
+  color: #000;
+}
+.cover-subtitle {
+  font-family: "Georgia", serif;
+  font-size: 18pt;
+  line-height: 1.25;
+  font-style: italic;
+  color: #222;
+  margin: 0 0 1.5em 0;
+  max-width: 5in;
+}
+.cover-tag {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 9pt;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000;
+  border-top: 1px solid #000;
+  padding-top: 0.6em;
+  margin-top: 2em;
+  max-width: 5in;
+}
+
+.cover-bottom {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 9pt;
+  letter-spacing: 0.04em;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #000;
+  padding-top: 0.6em;
+}
+.cover-bottom .left { }
+.cover-bottom .right { text-align: right; }
+
+/* SECTION CHROME */
+.section-number {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 8pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #555;
+  margin-top: 1.2em;
+}
+
+/* CALLOUTS */
+.callout {
+  border: 1px solid #000;
+  padding: 0.7em 0.9em;
+  margin: 1em 0;
+  font-size: 9.5pt;
+  font-family: "Helvetica", "Arial", sans-serif;
+  line-height: 1.45;
+}
+.callout-label {
+  font-size: 8pt;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 0.4em;
+  display: block;
+}
+
+/* DIAGRAM */
+.diagram {
+  margin: 1.2em 0;
+  page-break-inside: avoid;
+}
+.diagram svg { width: 100%; height: auto; display: block; }
+.diagram-caption {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 8.5pt;
+  color: #555;
+  text-align: center;
+  margin-top: 0.4em;
+  font-style: italic;
+}
+
+/* PULL STATEMENT */
+.pull {
+  font-family: "Georgia", serif;
+  font-size: 14pt;
+  font-style: italic;
+  line-height: 1.35;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  padding: 0.7em 0;
+  margin: 1.2em 0;
+}
+
+/* BACK MATTER */
+.back {
+  margin-top: 2em;
+  padding-top: 1em;
+  border-top: 1px solid #000;
+}
+.back h3 { margin-top: 1.2em; }
+
+.contacts {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 9.5pt;
+  line-height: 1.8;
+}
+.contacts .row { display: flex; gap: 1em; }
+.contacts .row .label {
+  width: 90px;
+  color: #555;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 8pt;
+}
+
+.two-col {
+  display: table;
+  width: 100%;
+  margin: 1em 0;
+}
+.two-col > div {
+  display: table-cell;
+  width: 50%;
+  vertical-align: top;
+  padding-right: 1.2em;
+}
+.two-col > div:last-child { padding-right: 0; padding-left: 1.2em; }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<section class="cover">
+  <div class="cover-top">
+    <div class="cover-mark"><span>Whitepaper</span>April 2026 · v1.0</div>
+    <h1 class="cover-title">The Agentic<br>Evidence Suite</h1>
+    <div class="cover-subtitle">A reference architecture for agent systems where execution is verifiable, policy is non-bypassable, and evidence is portable.</div>
+    <div class="cover-tag">Verifiable Execution · Non-Bypassable Governance · Portable Evidence</div>
+  </div>
+  <div class="cover-bottom">
+    <div class="left">
+      Christopher Mangun<br>
+      <span style="color:#555">Agentic Systems Architect · Brooklyn, NY</span>
+    </div>
+    <div class="right">
+      healthcare-ai-consultant.com<br>
+      <span style="color:#555">github.com/cmangun</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXECUTIVE SUMMARY ===================== -->
+<section>
+  <div class="section-number">00 · Executive Summary</div>
+  <h2>What this paper argues</h2>
+
+  <p class="lede">Agent systems now make consequential decisions — prescriptions of content, routing of capital, selection of treatment options, triage of operations work. The observability stack built for microservices assumes humans will read logs after the fact. That assumption fails the moment a decision is consequential and an auditor shows up.</p>
+
+  <p>The Evidence Suite is a six-component reference architecture that treats agent execution as a first-class auditable object. Each action produces a canonicalized, hash-chained, signed receipt. Each governance decision emits its own receipt — including denials. An evaluation harness runs bypass-resistance scenarios continuously. A viewer lets a third party open a bundle and verify it offline, without talking to the producing system.</p>
+
+  <p>It is deliberately adjacent to existing standards — OpenTelemetry, SLSA, W3C Verifiable Credentials, MCP, CloudEvents — and explicitly not a replacement for any of them. It fills the gap between what those standards describe (transport, spans, provenance of software supply chains) and what regulated AI actually has to answer for (the claim that <em>this agent took this action under these policies and the evidence is durable</em>).</p>
+
+  <div class="callout">
+    <span class="callout-label">Thesis</span>
+    Logs are a transport format. Telemetry is a signal. <strong>Evidence is a claim that can be verified without trust in the producer.</strong> Most agent systems conflate all three, and that conflation is where audits fail.
+  </div>
+
+  <h3>What's in the paper</h3>
+  <ul>
+    <li><strong>Chapter 1 — The Evidence Gap.</strong> Why logs, spans, and SLSA provenance don't cover agent execution.</li>
+    <li><strong>Chapter 2 — Invariants.</strong> The three properties any agent evidence layer must hold, and why any two without the third fails.</li>
+    <li><strong>Chapter 3 — Component Map.</strong> The six repositories, what each owns, and how they compose.</li>
+    <li><strong>Chapter 4 — Standards Mapping.</strong> How the Evidence Suite overlaps and diverges from existing standards.</li>
+    <li><strong>Chapter 5 — What's Next.</strong> Open problems, adoption paths, and the invitation.</li>
+  </ul>
+</section>
+
+<div class="page-break"></div>
+
+<!-- ===================== CHAPTER 1 ===================== -->
+<section>
+  <div class="section-number">01 · The Evidence Gap</div>
+  <h2>Logs are not evidence</h2>
+
+  <p class="lede">"We have logs" is the sentence every AI team says when asked about auditability. It is also, almost always, the sentence that ends the audit badly.</p>
+
+  <p>A log line is a transport artifact. It was emitted by a process, written to a file, forwarded by a collector, stored by an aggregator, and is now being shown to a human through a search interface. Between emission and display, the line can be edited, re-ordered, lost, sampled, truncated, or synthesized by a later process. The reader has no cryptographic basis to believe the line they're reading is the line that was emitted.</p>
+
+  <p>For microservice debugging, this is fine. The cost of a false log is a confused engineer. For agent systems operating on PHI, financial positions, or clinical recommendations, the cost of a false log — or the <em>inability to prove a log is not false</em> — is a regulatory finding.</p>
+
+  <h3>Three things logs cannot do</h3>
+  <ol>
+    <li><strong>Prove completeness.</strong> If an action occurred but the log line was dropped, the log cannot show the gap. An auditor asking "show me every tool call in this session" cannot get a verified answer from a log aggregator.</li>
+    <li><strong>Prove ordering.</strong> Logs are timestamped by the producer, by the collector, and by the store. None of those timestamps are tamper-evident. Post-hoc reordering is trivial.</li>
+    <li><strong>Prove authorship.</strong> A log line says it came from a service. It does not cryptographically prove which binary, build, or identity emitted it.</li>
+  </ol>
+
+  <h3>Why existing standards don't close the gap</h3>
+
+  <p><strong>OpenTelemetry</strong> standardizes the transport and semantic conventions for spans, metrics, and logs. It is excellent at that job. It does not sign spans, chain them, or give a verifier any basis to detect omission. An OTel trace is still a log, just one with better structure.</p>
+
+  <p><strong>SLSA</strong> gives provenance for software supply chains — what source produced what binary, with what builders, with what materials. It answers "how did this artifact come to exist." It does not answer "what did the artifact do once it was deployed."</p>
+
+  <p><strong>W3C Verifiable Credentials</strong> give tamper-evident claims issued by some party about some subject. VCs are a brilliant primitive and sit adjacent to receipts. But VCs model discrete, human-scale claims (a diploma, a vaccination). Agents take thousands of actions per session; we need a structure tuned for high-volume execution trails, not a credential per action.</p>
+
+  <p><strong>MCP</strong> standardizes how models connect to tools. It does not define what evidence of a tool call looks like, whether it can be verified offline, or who signs for the call.</p>
+
+  <p><strong>CloudEvents</strong> gives events a common envelope. Envelopes travel; they do not prove what was inside them two weeks ago.</p>
+
+  <div class="callout">
+    <span class="callout-label">The claim</span>
+    These standards are not wrong. They are solving different problems. Agent systems need a layer <em>between</em> them — one that treats each action as a signed, chained, portable receipt, and each policy decision as its own receipt, and composes them into a bundle that a third party can verify without trusting the producer.
+  </div>
+
+  <p>That layer is the Agentic Evidence Suite.</p>
+</section>
+
+<div class="page-break"></div>
+
+<!-- ===================== CHAPTER 2 ===================== -->
+<section>
+  <div class="section-number">02 · Invariants</div>
+  <h2>Three properties, mutually dependent</h2>
+
+  <p class="lede">An evidence layer holds three properties or it holds none.</p>
+
+  <div class="two-col">
+    <div>
+      <h3>Verifiability by construction</h3>
+      <p>Every action produces a canonicalized, hash-chained, signed receipt at the moment of execution. The structure of the receipt — not a post-hoc audit tool — is what makes tampering, reordering, and omission detectable.</p>
+      <p>Canonicalization means two serializations of the same receipt hash identically. Hash-chaining means each receipt references the previous receipt's hash; dropping or reordering breaks the chain. Signing means an identifiable party attests, non-repudiably, that the receipt was emitted as recorded.</p>
+    </div>
+    <div>
+      <h3>Non-bypassable governance</h3>
+      <p>Policy is evaluated in the execution path, not beside it. An agent that can reach a tool without passing through policy evaluation is, by definition, ungoverned for that tool. Deny-by-default is the posture; every allow and every deny emits a <em>decision receipt</em> — which means an auditor can see why a denial happened just as clearly as why an allow happened.</p>
+      <p>The failure mode governance layers slip into is "governance as logging." A policy that runs <em>in parallel</em> with execution is a reporter. A policy that runs <em>in line with</em> execution is a gate.</p>
+    </div>
+  </div>
+
+  <h3>Portable evidence</h3>
+  <p>The evidence layer produces bundles — self-contained, verifiable packages that travel. A regulator, a CTO, an auditor, or a successor system can open a bundle and verify it offline with nothing more than the suite's verification tooling and the issuing public keys. No phone calls to the producing system. No "trust us, we have logs."</p>
+
+  <p>Portability is what turns receipts from a private ledger into a public good. An architecture that produces beautiful internal evidence but cannot hand a regulator a bundle has solved an internal problem, not the audit problem.</p>
+
+  <div class="pull">
+    Verifiability without portability is a private ledger. Portability without non-bypassable governance is a partial story. Governance without verifiability is theater. The three are load-bearing for each other.
+  </div>
+
+  <h3>Why any two without the third fails</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Combination</th>
+        <th>What you get</th>
+        <th>What breaks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Verifiable + governed, not portable</td>
+        <td>A well-instrumented internal system</td>
+        <td>Cannot hand evidence to a third party. Every audit becomes a live conversation with the engineering team.</td>
+      </tr>
+      <tr>
+        <td>Verifiable + portable, not governed</td>
+        <td>A tamper-evident log</td>
+        <td>You can prove what the agent did. You cannot prove it was permitted. A regulator asks "under which policy" and the answer is "we have logs."</td>
+      </tr>
+      <tr>
+        <td>Governed + portable, not verifiable</td>
+        <td>A policy framework with a nice dashboard</td>
+        <td>Claims are not cryptographically grounded. A motivated adversary — or a sloppy engineer — can edit the record and nothing detects it.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="page-break"></div>
+
+<!-- ===================== CHAPTER 3 ===================== -->
+<section>
+  <div class="section-number">03 · Component Map</div>
+  <h2>Six components, one designed system</h2>
+
+  <p class="lede">The Evidence Suite is a deliberate composition: one spec layer, two governance layers, one evaluation layer, and two handoff layers. Each is a standalone OSS repository that composes with the others by hashing and signing contracts, not by runtime coupling.</p>
+
+  <div class="diagram no-break">
+    <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif" font-size="10">
+      <rect x="0.5" y="0.5" width="719" height="339" fill="none" stroke="#000" stroke-width="1"/>
+      <rect x="30" y="25" width="660" height="48" fill="none" stroke="#000" stroke-width="1"/>
+      <text x="50" y="45" font-weight="700" font-size="9" letter-spacing="0.1em">SPEC</text>
+      <text x="50" y="62" font-weight="700" font-size="12">agentic-receipts</text>
+      <text x="200" y="62" font-size="10" fill="#333">schemas · canonicalization · hashing · signing · redaction · threat model · conformance vectors</text>
+      <rect x="30" y="95" width="200" height="70" fill="none" stroke="#000" stroke-width="1"/>
+      <text x="45" y="113" font-weight="700" font-size="9" letter-spacing="0.1em">TOOLING</text>
+      <text x="45" y="133" font-weight="700" font-size="11">agentic-trace-cli</text>
+      <text x="45" y="150" font-size="9.5" fill="#333">init · append · sign · verify</text>
+      <text x="45" y="162" font-size="9.5" fill="#333">redact · export</text>
+      <rect x="260" y="95" width="200" height="70" fill="none" stroke="#000" stroke-width="1"/>
+      <text x="275" y="113" font-weight="700" font-size="9" letter-spacing="0.1em">GOVERNANCE</text>
+      <text x="275" y="133" font-weight="700" font-size="11">agentic-policy-engine</text>
+      <text x="275" y="150" font-size="9.5" fill="#333">deny-by-default evaluation</text>
+      <text x="275" y="162" font-size="9.5" fill="#333">decision receipts</text>
+      <rect x="490" y="95" width="200" height="70" fill="none" stroke="#000" stroke-width="1"/>
+      <text x="505" y="113" font-weight="700" font-size="9" letter-spacing="0.1em">EVALUATION</text>
+      <text x="505" y="133" font-weight="700" font-size="11">agentic-eval-harness</text>
+      <text x="505" y="150" font-size="9.5" fill="#333">bypass · injection · exfil</text>
+      <text x="505" y="162" font-size="9.5" fill="#333">determinism · regression gates</text>
+      <rect x="30" y="185" width="315" height="70" fill="none" stroke="#000" stroke-width="1"/>
+      <text x="45" y="203" font-weight="700" font-size="9" letter-spacing="0.1em">REVIEW</text>
+      <text x="45" y="223" font-weight="700" font-size="11">agentic-evidence-viewer</text>
+      <text x="45" y="240" font-size="9.5" fill="#333">client-side bundle verification · offline · no server dependency</text>
+      <rect x="375" y="185" width="315" height="70" fill="none" stroke="#000" stroke-width="1"/>
+      <text x="390" y="203" font-weight="700" font-size="9" letter-spacing="0.1em">PROVENANCE</text>
+      <text x="390" y="223" font-weight="700" font-size="11">agentic-artifacts</text>
+      <text x="390" y="240" font-size="9.5" fill="#333">artifact manifests · integrity hashing · supply-chain link</text>
+      <rect x="260" y="278" width="200" height="42" fill="none" stroke="#000" stroke-width="2"/>
+      <text x="280" y="295" font-weight="700" font-size="9" letter-spacing="0.12em">BUNDLE OUTPUT</text>
+      <text x="280" y="312" font-size="10" fill="#333">portable · signed · verifiable</text>
+      <line x1="130" y1="73" x2="130" y2="95" stroke="#000" stroke-width="0.75"/>
+      <line x1="360" y1="73" x2="360" y2="95" stroke="#000" stroke-width="0.75"/>
+      <line x1="590" y1="73" x2="590" y2="95" stroke="#000" stroke-width="0.75"/>
+      <line x1="187" y1="255" x2="300" y2="278" stroke="#000" stroke-width="0.75"/>
+      <line x1="533" y1="255" x2="420" y2="278" stroke="#000" stroke-width="0.75"/>
+    </svg>
+    <div class="diagram-caption">Figure 1 — Evidence Suite component map. Spec at the top defines contracts; four implementation layers emit or verify receipts; bundle output is portable and offline-verifiable.</div>
+  </div>
+
+  <h3>Component responsibilities</h3>
+
+  <table>
+    <thead>
+      <tr><th>Layer</th><th>Repository</th><th>Owns</th><th>Does not own</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Spec</td>
+        <td><code>agentic-receipts</code></td>
+        <td>Data model, canonicalization, hashing, signing, redaction policy, threat model, conformance vectors</td>
+        <td>Transport, storage, UI</td>
+      </tr>
+      <tr>
+        <td>Tooling</td>
+        <td><code>agentic-trace-cli</code></td>
+        <td>Local init/append/sign/verify/redact/export over files</td>
+        <td>Policy evaluation, UI</td>
+      </tr>
+      <tr>
+        <td>Governance</td>
+        <td><code>agentic-policy-engine</code></td>
+        <td>Deny-by-default evaluation at enforcement points; emits decision receipts for allows and denies</td>
+        <td>Receipt schema (consumes), storage</td>
+      </tr>
+      <tr>
+        <td>Evaluation</td>
+        <td><code>agentic-eval-harness</code></td>
+        <td>Red-team scenarios (bypass, injection, PHI exfil, budget overrun, determinism) and regression gates</td>
+        <td>Runtime governance (uses)</td>
+      </tr>
+      <tr>
+        <td>Review</td>
+        <td><code>agentic-evidence-viewer</code></td>
+        <td>Offline, client-side bundle verification</td>
+        <td>Authoring, signing, storage</td>
+      </tr>
+      <tr>
+        <td>Provenance</td>
+        <td><code>agentic-artifacts</code></td>
+        <td>Artifact manifests with integrity hashing; linkage to SLSA-style supply chain</td>
+        <td>Runtime execution</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="page-break"></div>
+
+<!-- ===================== CHAPTER 4 ===================== -->
+<section>
+  <div class="section-number">04 · Standards Mapping</div>
+  <h2>Adjacent, not redundant</h2>
+
+  <p class="lede">The Evidence Suite is not a replacement for OpenTelemetry, SLSA, W3C VC, MCP, or CloudEvents. It is a layer above them, tuned to the specific problem of high-volume agent execution under regulatory scrutiny.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Standard</th>
+        <th>Overlap</th>
+        <th>Divergence</th>
+        <th>Relationship</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>OpenTelemetry</strong></td>
+        <td>Both model execution as structured records. Span IDs and receipt IDs are both references to bounded units of work.</td>
+        <td>OTel spans are not signed, not chained, and omissions are undetectable. Receipts are signed, hash-chained, canonicalized.</td>
+        <td>OTel carries receipts. A receipt can be emitted <em>as</em> a span attribute or <em>alongside</em> a span. OTel is the transport; receipts are the evidence payload.</td>
+      </tr>
+      <tr>
+        <td><strong>SLSA</strong></td>
+        <td>Both care about tamper-evidence and signing.</td>
+        <td>SLSA describes how artifacts come to exist. Receipts describe what agents do at runtime.</td>
+        <td>Complementary. <code>agentic-artifacts</code> links receipts to SLSA-style provenance — every artifact a receipt references has a verifiable build lineage.</td>
+      </tr>
+      <tr>
+        <td><strong>W3C Verifiable Credentials</strong></td>
+        <td>Both are cryptographically verifiable claims issued by an identified party.</td>
+        <td>VCs target discrete, human-scale claims. Receipts target high-volume execution trails with hash-chaining.</td>
+        <td>Receipts can be framed as VCs for specific use cases (e.g., an "authorized action" credential). Day-to-day, hash-chained receipts are the right primitive for execution volume.</td>
+      </tr>
+      <tr>
+        <td><strong>MCP</strong></td>
+        <td>Both concern agent–tool interactions.</td>
+        <td>MCP defines how tools are called. Receipts define what evidence of the call looks like.</td>
+        <td>A signed receipt can be emitted per MCP tool call, making the suite a natural evidence layer for MCP-based agent platforms.</td>
+      </tr>
+      <tr>
+        <td><strong>CloudEvents</strong></td>
+        <td>Both add structure to event records.</td>
+        <td>CloudEvents is an envelope. Receipts are the claim inside the envelope.</td>
+        <td>A receipt can ride a CloudEvents envelope across system boundaries without losing its signature.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Design stance</h3>
+
+  <p>Receipts carry what existing standards don't try to carry: <strong>a durable, verifiable claim about a specific agent action, its inputs, its policy decision, and its outputs, signed by an identified party, chained into an ordered record, and packaged into a bundle a third party can verify offline.</strong> Everything else — transport, provenance, credentials, envelopes — is delegated to the standards already doing those jobs well.</p>
+
+  <div class="callout">
+    <span class="callout-label">Interop posture</span>
+    The Evidence Suite will move toward W3C / IETF working groups as the spec stabilizes. The goal is not to compete with standards but to contribute a missing layer. Conformance vectors ship today so implementations can align before any standardization.
+  </div>
+</section>
+
+<div class="page-break"></div>
+
+<!-- ===================== CHAPTER 5 ===================== -->
+<section>
+  <div class="section-number">05 · What's Next</div>
+  <h2>Open problems and the invitation</h2>
+
+  <p class="lede">The Evidence Suite is a v1 reference architecture. Several problems remain genuinely open. A mature community around this layer — not any single implementer — is what closes them.</p>
+
+  <h3>Open problems</h3>
+  <ul>
+    <li><strong>Post-quantum signature path.</strong> Ed25519 is today's default. A dual-signature scheme (classical + Dilithium3 or similar) needs a migration plan that doesn't break existing chains.</li>
+    <li><strong>Cross-organization bundle interop.</strong> When Agent A (Organization X) calls Agent B (Organization Y), whose chain does the receipt belong to? A shared-custody model is needed.</li>
+    <li><strong>Redaction under verification.</strong> Redaction today preserves hash integrity but loses content. Selective-disclosure cryptography (BBS+ signatures, zkSNARKs in limited domains) is promising but not yet practical at execution volumes.</li>
+    <li><strong>Receipt volume and archival.</strong> A high-volume agent emits tens of thousands of receipts per session. Cold-storage and retrieval patterns that preserve verifiability at archive scale are an open operational question.</li>
+    <li><strong>Regulatory alignment.</strong> FDA, EMA, and equivalent agencies are publishing guidance for AI/ML systems. Mapping Evidence Suite outputs to specific regulatory control families (21 CFR Part 11, Annex 11, GxP validation expectations) is work in progress.</li>
+  </ul>
+
+  <h3>Adoption paths</h3>
+  <ol>
+    <li><strong>Single-team pilot.</strong> One agentic workflow, receipts emitted in parallel with existing logs, viewer used for review. Low risk, builds internal familiarity. Typical timeline: 4–8 weeks.</li>
+    <li><strong>Platform-level adoption.</strong> Policy engine placed at the enforcement point for all agent tool calls; receipts become the primary audit record. Typical timeline: 3–6 months.</li>
+    <li><strong>Cross-team standardization.</strong> Receipt schema adopted across multiple agent systems in an organization; bundles become the exchange format for cross-system collaboration. Typical timeline: 6–12 months.</li>
+    <li><strong>Ecosystem contribution.</strong> Conformance vectors adopted by vendors; cross-implementation bundles verify. Timeline: ongoing, community-dependent.</li>
+  </ol>
+
+  <h3>How this ties to ATVC</h3>
+  <p>The Evidence Suite is the technical substrate. ATVC — the Agentic Trust Validation Certification framework — is the methodology for bringing the substrate to bear on a real system: 100 steps across Ontology → Architecture → Engineering → Enablement, with 211 validation documents. Organizations that want the Evidence Suite implemented in a regulated context typically run ATVC to get there.</p>
+
+  <h3>The invitation</h3>
+  <p>The Evidence Suite is open-source and being actively developed. The fastest ways to engage:</p>
+  <ul>
+    <li>Read the specs at <code>github.com/cmangun/agentic-receipts</code>.</li>
+    <li>Run the conformance vectors against any implementation you maintain.</li>
+    <li>Open issues, propose changes, or contribute ADRs.</li>
+    <li>If your organization has a regulated AI program and wants architecture-level engagement, see the back cover.</li>
+  </ul>
+</section>
+
+<!-- ===================== BACK MATTER ===================== -->
+<section class="back">
+  <h3>About the author</h3>
+  <p>Christopher Mangun is an Agentic Systems Architect based in Brooklyn, NY. He designs AI systems where execution is verifiable, policy is non-bypassable, and evidence is portable. His practice focuses on regulated industries — healthcare, pharmaceutical, medical devices — where the gap between "shipped" and "auditable" is the hardest part of the problem. He is the author of ATVC and the designer of the Agentic Evidence Suite.</p>
+
+  <h3>How to engage</h3>
+  <div class="contacts">
+    <div class="row"><div class="label">Email</div><div>cmangun@gmail.com</div></div>
+    <div class="row"><div class="label">Site</div><div>healthcare-ai-consultant.com</div></div>
+    <div class="row"><div class="label">GitHub</div><div>github.com/cmangun</div></div>
+    <div class="row"><div class="label">LinkedIn</div><div>linkedin.com/in/christophermangun</div></div>
+    <div class="row"><div class="label">ATVC</div><div>enterprise-ai-playbook-demo.vercel.app · access code: ATVC</div></div>
+  </div>
+
+  <p style="margin-top:1.5em;font-size:9pt;color:#555;">
+    This whitepaper is version 1.0, April 2026. It is published under a permissive license for redistribution with attribution. The Agentic Evidence Suite specifications, ATVC framework, and associated templates are trademarks and copyrighted works of Christopher Mangun. Referenced standards are the property of their respective organizations.
+  </p>
+</section>
+
+</body>
+</html>
