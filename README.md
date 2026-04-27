@@ -33,7 +33,7 @@ The Evidence Suite is designed to interoperate with existing standards rather th
 
 ## Whitepaper
 
-A long-form treatment of the design rationale — why receipts, why deny-by-default, why a separable evaluation harness — publishes under `docs/whitepaper/` as both PDF and HTML.
+A long-form treatment of the design rationale — why receipts, why deny-by-default, why a separable evaluation harness — is available as [PDF](docs/whitepaper/evidence-suite-whitepaper.pdf) and [HTML source](docs/whitepaper/evidence-suite-whitepaper.html). v1.0, April 2026.
 
 ## Glossary
 
