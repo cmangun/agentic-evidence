@@ -41,7 +41,7 @@ Cross-suite vocabulary is defined in [GLOSSARY.md](GLOSSARY.md). It distinguishe
 
 ## Roadmap and versioning
 
-Per-component stability status (stable vs experimental) and the suite's SemVer rules publish as `ROADMAP.md` and `VERSIONING.md`. Until each component carries a tagged v0.1.0 release with conformance vectors, treat all interfaces as unstable.
+Stability classifications and release-line framing are at [ROADMAP.md](ROADMAP.md). Companion: VERSIONING.md for SemVer rules.
 
 ## Contribute
 
