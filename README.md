@@ -29,7 +29,7 @@ Specifications live in their respective component repos. As they stabilize towar
 
 ## Standards interop
 
-The Evidence Suite is designed to interoperate with existing standards rather than replace them. Mappings to OpenTelemetry, SLSA, W3C Verifiable Credentials, the Model Context Protocol, and CloudEvents publish in this repo as `INTEROP.md`.
+The full standards-mapping document is at [INTEROP.md](INTEROP.md). It defines the integration shape for OpenTelemetry, SLSA, W3C Verifiable Credentials, the Model Context Protocol, and CloudEvents, with field-level mappings and a per-version compatibility matrix.
 
 ## Whitepaper
 
