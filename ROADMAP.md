@@ -27,19 +27,17 @@ The spec-stable, implementations-experimental pattern is deliberate. Stabilizing
 
 ## §3. v0.1 compatibility matrix
 
-The matrix below names the component-version ranges that compose into a coherent v0.1 suite release. Specific version pins fill as each component's first v0.1 conformance-pass tag lands.
+The matrix below names the component-version ranges that compose into a coherent v0.1 suite release.
 
 ```
-suite v0.1
-  agentic-receipts        v0.1.x
-  agentic-policy-engine   v0.1.x
-  agentic-eval-harness    v0.1.x
-  agentic-artifacts       v0.1.x
-  agentic-trace-cli       v0.1.x
-  agentic-evidence-viewer v0.1.x
+suite v0.1.0
+  agentic-receipts        ≥ 0.1.0, < 0.2.0
+  agentic-policy-engine   ≥ 0.1.0, < 0.2.0
+  agentic-eval-harness    ≥ 0.1.0, < 0.2.0
+  agentic-artifacts       ≥ 0.1.0, < 0.2.0
+  agentic-trace-cli       ≥ 0.1.0, < 0.2.0
+  agentic-evidence-viewer ≥ 0.1.0, < 0.2.0
 ```
-
-Until each component carries a tagged v0.1.0 release that passes the receipt-spec conformance vectors, adopters should pin to specific commit SHAs rather than semantic ranges.
 
 ## §4. What's stable in v0.1
 
