@@ -1,0 +1,7 @@
+title: Evidence Suite
+description: Reference architecture and specs for verifiable agentic AI.
+theme: jekyll-theme-architect
+
+exclude:
+  - LICENSE
+  - .gitignore
