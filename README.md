@@ -41,7 +41,7 @@ Cross-suite vocabulary is defined in [GLOSSARY.md](GLOSSARY.md). It distinguishe
 
 ## Roadmap and versioning
 
-Stability classifications and release-line framing are at [ROADMAP.md](ROADMAP.md). Companion: VERSIONING.md for SemVer rules.
+SemVer rules, breaking-change definitions, and deprecation policy are at [VERSIONING.md](VERSIONING.md). Companion to [ROADMAP.md](ROADMAP.md), which tracks live status; this document carries the rules that govern it.
 
 ## Contribute
 
