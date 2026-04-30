@@ -2,6 +2,8 @@
 
 > Six interoperating components for verifiable agentic AI. This repo holds the suite-level reference architecture and specifications.
 
+> New here? Start with [QUICK-TOUR.md](QUICK-TOUR.md) — a 5-minute reading order across the three documents that show the architectural thesis.
+
 ## Overview
 
 The Evidence Suite is a set of six open-source components for building agentic AI systems whose execution can be independently verified. It targets architects and engineering teams shipping AI agents into regulated, audited, or high-stakes environments — where after-the-fact reasoning ("did this run actually do what it claims?") is a hard requirement, not a nice-to-have.
